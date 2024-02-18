@@ -7,9 +7,7 @@ import (
 
 type RestaurantRepository interface {
 	Create(ctx context.Context, restaurant domain.Restaurant) error
-	GetByID(ctx context.Context, id string) (domain.Restaurant, error)
-	GetAll(ctx context.Context) ([]domain.Restaurant, error)
-	Update(ctx context.Context, id string, inp domain.UpdateRestaurantInput) error
+	GetByOwnerId(ctx context.Context, id string) (domain.Restaurant, error)
 }
 
 type Restaurant struct {
@@ -26,14 +24,6 @@ func (b *Restaurant) Create(ctx context.Context, restaurant domain.Restaurant) e
 	return b.repo.Create(ctx, restaurant)
 }
 
-func (b *Restaurant) GetByID(ctx context.Context, id string) (domain.Restaurant, error) {
-	return b.repo.GetByID(ctx, id)
-}
-
-func (b *Restaurant) GetAll(ctx context.Context) ([]domain.Restaurant, error) {
-	return b.repo.GetAll(ctx)
-}
-
-func (b *Restaurant) Update(ctx context.Context, id string, inp domain.UpdateRestaurantInput) error {
-	return b.repo.Update(ctx, id, inp)
+func (b *Restaurant) GetByOwnerId(ctx context.Context, ownerId string) (domain.Restaurant, error) {
+	return b.repo.GetByOwnerId(ctx, ownerId)
 }

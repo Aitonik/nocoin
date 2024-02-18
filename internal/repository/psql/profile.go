@@ -20,19 +20,9 @@ func (b *Profile) Create(ctx context.Context, profile domain.Profile) error {
 	return err
 }
 
-func (b *Profile) GetByID(ctx context.Context, id string) (domain.Profile, error) {
+func (b *Profile) FindProfileByEmail(ctx context.Context, email string) (domain.Profile, error) {
 	var profile domain.Profile
-	err := b.db.QueryRow("SELECT id, name FROM profile WHERE id=$1", id).Scan(&profile.ID, &profile.Name)
-	if err == sql.ErrNoRows {
-		return profile, domain.ErrProfileNotFound
-	}
-
-	return profile, err
-}
-
-func (b *Profile) GetPasswordByEmail(ctx context.Context, email string) (domain.Profile, error) {
-	var profile domain.Profile
-	err := b.db.QueryRow("SELECT id, password FROM profile WHERE email=$1", email).Scan(&profile.ID, &profile.Password)
+	err := b.db.QueryRow("SELECT id, name, email, password, role FROM profile WHERE email=$1", email).Scan(&profile.ID, &profile.Name, &profile.Email, &profile.Password, &profile.Role)
 	if err == sql.ErrNoRows {
 		return profile, domain.ErrProfileNotFound
 	}

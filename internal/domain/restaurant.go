@@ -5,7 +5,7 @@ import (
 )
 
 var (
-	ErrBookNotFound = errors.New("book not found")
+	ErrRestaurantNotFound = errors.New("restaurant not found")
 )
 
 type Restaurant struct {
